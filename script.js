@@ -18,9 +18,17 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-// Tilt 3D sulla card al movimento del mouse
+// Su touch: tocca la foto per vedere il retro della borsa
+const isTouch = matchMedia('(hover: none)').matches;
+if (isTouch) {
+  document.querySelectorAll('.card-img--photo').forEach(img => {
+    img.addEventListener('click', () => img.classList.toggle('show-alt'));
+  });
+}
+
+// Tilt 3D sulla card al movimento del mouse (solo desktop)
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (!reduceMotion) {
+if (!reduceMotion && !isTouch) {
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
