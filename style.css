@@ -23,6 +23,36 @@ body{
   html{scroll-behavior:auto;}
 }
 
+/* ---------- SCROLL PROGRESS ---------- */
+.scroll-progress{
+  position:fixed; top:0; left:0; z-index:60;
+  height:3px; width:100%;
+  background:linear-gradient(90deg, var(--cognac), color-mix(in srgb, var(--cognac) 60%, var(--sage)));
+  transform-origin:left;
+  transform:scaleX(0);
+}
+
+/* ---------- MARQUEE ---------- */
+.marquee{
+  overflow:hidden;
+  border-block:1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  padding:1rem 0;
+  background:var(--white);
+}
+.marquee-track{
+  display:flex; width:max-content;
+  animation:marquee 28s linear infinite;
+}
+.marquee-track span{
+  font-family:var(--display); font-style:italic;
+  font-size:1.05rem; letter-spacing:.08em;
+  color:color-mix(in srgb, var(--ink) 70%, var(--paper));
+  white-space:nowrap;
+}
+@keyframes marquee{
+  to{transform:translateX(-50%);}
+}
+
 /* ---------- NAV ---------- */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:50;
@@ -106,7 +136,30 @@ h1{
   max-width:14ch;
   margin-inline:auto;
 }
-h1 em{font-style:italic; color:var(--cognac);}
+h1 em{
+  font-style:italic;
+  background:linear-gradient(110deg, var(--cognac) 35%, #d99a5e 50%, var(--cognac) 65%);
+  background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:shimmer 4.5s ease-in-out infinite;
+}
+@keyframes shimmer{
+  0%,100%{background-position:110% 0;}
+  50%{background-position:-10% 0;}
+}
+
+/* particelle fluttuanti nella hero */
+.dot{
+  position:absolute; border-radius:50%;
+  background:color-mix(in srgb, var(--cognac) 55%, var(--paper));
+  opacity:.35; pointer-events:none;
+  animation:float linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(15vh) rotate(0deg);}
+  to{transform:translateY(-110vh) rotate(340deg);}
+}
 header p{
   max-width:44ch;
   margin:1.8rem auto 2.5rem;
@@ -115,6 +168,7 @@ header p{
 }
 .btn{
   display:inline-block;
+  will-change:transform;
   background:var(--ink); color:var(--white);
   text-decoration:none;
   font-size:.8rem; text-transform:uppercase; letter-spacing:.2em;
