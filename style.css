@@ -82,11 +82,13 @@ nav ul a::after{
 }
 nav ul a:hover::after, nav ul a:focus-visible::after{transform:scaleX(1); transform-origin:left;}
 nav a:hover, nav a:focus-visible{color:var(--cognac);}
+nav ul a.active{color:var(--cognac);}
+nav ul a.active::after{transform:scaleX(1);}
 a:focus-visible, button:focus-visible{outline:2px solid var(--cognac); outline-offset:3px;}
 
 /* ---------- HERO ---------- */
 header{
-  min-height:100svh;
+  min-height:88svh;
   display:grid; place-items:center;
   text-align:center;
   padding:7rem 1.5rem 4rem;
@@ -192,6 +194,32 @@ header p{
   0%,100%{transform:translate(-50%,0);}
   50%{transform:translate(-50%,8px);}
 }
+
+/* ---------- TESTATA PAGINE INTERNE ---------- */
+.page-head{
+  padding:9rem 1.5rem 1rem;
+  text-align:center;
+  position:relative;
+}
+.page-head::before{
+  content:"";
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 55% 70% at 50% 0%, color-mix(in srgb, var(--sage) 40%, transparent), transparent 75%);
+  pointer-events:none;
+}
+.page-head > *{
+  position:relative;
+  opacity:0;
+  animation:heroUp .8s cubic-bezier(.22,.8,.3,1) forwards;
+}
+.page-head .eyebrow{animation-delay:.05s; margin-bottom:1rem;}
+.page-head h1{font-size:clamp(2.2rem, 6vw, 4rem); animation-delay:.2s;}
+.page-head p{
+  max-width:48ch; margin:1.2rem auto 0;
+  color:color-mix(in srgb, var(--ink) 80%, var(--paper));
+  animation-delay:.35s;
+}
+.page-section{padding-top:3.5rem;}
 
 /* ---------- SEZIONI ---------- */
 section{padding:6rem 2rem;}
