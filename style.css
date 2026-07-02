@@ -286,7 +286,7 @@ section{padding:6rem 2rem;}
 }
 .card-foot a:hover{color:var(--cognac);}
 
-.card-img--photo{background:#dcd9cf;}
+.card-img--photo{background:#dcd9cf; cursor:pointer; -webkit-tap-highlight-color:transparent;}
 .card-img--photo .ph-main{transition:transform .6s ease;}
 .card-img--photo .ph-alt{position:absolute; inset:0; opacity:0; transition:opacity .35s ease;}
 .card:hover .card-img--photo .ph-main{transform:scale(1.04);}

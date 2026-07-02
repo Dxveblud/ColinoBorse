@@ -18,13 +18,12 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-// Su touch: tocca la foto per vedere il retro della borsa
+// Tocca/clicca la foto per vedere il retro della borsa
+// (listener sempre attivo: su iOS il click parte solo con cursor:pointer nel CSS)
 const isTouch = matchMedia('(hover: none)').matches;
-if (isTouch) {
-  document.querySelectorAll('.card-img--photo').forEach(img => {
-    img.addEventListener('click', () => img.classList.toggle('show-alt'));
-  });
-}
+document.querySelectorAll('.card-img--photo').forEach(img => {
+  img.addEventListener('click', () => img.classList.toggle('show-alt'));
+});
 
 // Barra di avanzamento scroll
 const progress = document.querySelector('.scroll-progress');
