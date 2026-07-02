@@ -1,9 +1,9 @@
 :root{
-  --paper:#EAE8DF;
-  --ink:#1E241F;
-  --cognac:#9C5B2B;
-  --sage:#B9BCA8;
-  --white:#F7F6F1;
+  --paper:#F5EFE3;
+  --ink:#22281F;
+  --cognac:#C2601C;
+  --sage:#AFBE9C;
+  --white:#FFFDF8;
   --display:'Bodoni Moda', serif;
   --body:'Karla', sans-serif;
 }
@@ -35,9 +35,8 @@ body{
 /* ---------- MARQUEE ---------- */
 .marquee{
   overflow:hidden;
-  border-block:1px solid color-mix(in srgb, var(--ink) 15%, transparent);
-  padding:1rem 0;
-  background:var(--white);
+  padding:1.1rem 0;
+  background:var(--cognac);
 }
 .marquee-track{
   display:flex; width:max-content;
@@ -45,8 +44,8 @@ body{
 }
 .marquee-track span{
   font-family:var(--display); font-style:italic;
-  font-size:1.05rem; letter-spacing:.08em;
-  color:color-mix(in srgb, var(--ink) 70%, var(--paper));
+  font-size:1.1rem; letter-spacing:.08em;
+  color:var(--white);
   white-space:nowrap;
 }
 @keyframes marquee{
@@ -98,7 +97,9 @@ header::before{
   content:"";
   position:absolute; inset:0;
   background:
-    radial-gradient(ellipse 60% 45% at 50% 60%, color-mix(in srgb, var(--sage) 45%, transparent), transparent 70%);
+    radial-gradient(ellipse 60% 45% at 50% 60%, color-mix(in srgb, var(--sage) 65%, transparent), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 78% 22%, color-mix(in srgb, var(--cognac) 18%, transparent), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 18% 80%, color-mix(in srgb, var(--cognac) 14%, transparent), transparent 70%);
   pointer-events:none;
 }
 header::after{
@@ -152,8 +153,8 @@ h1 em{
 /* particelle fluttuanti nella hero */
 .dot{
   position:absolute; border-radius:50%;
-  background:color-mix(in srgb, var(--cognac) 55%, var(--paper));
-  opacity:.35; pointer-events:none;
+  background:color-mix(in srgb, var(--cognac) 75%, var(--paper));
+  opacity:.5; pointer-events:none;
   animation:float linear infinite;
 }
 @keyframes float{
@@ -169,15 +170,16 @@ header p{
 .btn{
   display:inline-block;
   will-change:transform;
-  background:var(--ink); color:var(--white);
+  background:var(--cognac); color:var(--white);
   text-decoration:none;
   font-size:.8rem; text-transform:uppercase; letter-spacing:.2em;
   padding:1rem 2.4rem;
-  border:1px solid var(--ink);
-  transition:background .25s, color .25s;
+  border:1px solid var(--cognac);
+  box-shadow:0 10px 24px -12px color-mix(in srgb, var(--cognac) 70%, transparent);
+  transition:background .25s, color .25s, box-shadow .25s;
 }
-.btn:hover{background:transparent; color:var(--ink);}
-.btn--ghost{background:transparent; color:var(--ink); margin-left:.75rem;}
+.btn:hover{background:transparent; color:var(--cognac); box-shadow:none;}
+.btn--ghost{background:transparent; color:var(--ink); border-color:var(--ink); box-shadow:none; margin-left:.75rem;}
 .btn--ghost:hover{background:var(--ink); color:var(--white);}
 
 .scroll-hint{
@@ -392,7 +394,8 @@ footer{
   .card:hover .card-img--photo .ph-main{transform:none;}
   .card:hover .card-img--photo .ph-alt{opacity:0;}
   .card:hover .card-img::after{transition:none; transform:translateX(-120%);}
-  .card-img--photo.show-alt .ph-alt{opacity:1;}
+  /* !important: il tap su mobile attiva anche :hover, che altrimenti vince e tiene la foto nascosta */
+  .card-img--photo.show-alt .ph-alt{opacity:1!important;}
   .card-img--photo::before{
     content:"Tocca per girare";
     position:absolute; bottom:.7rem; right:.7rem; z-index:2;
@@ -401,6 +404,7 @@ footer{
     color:var(--white); padding:.3rem .6rem;
     border-radius:2px;
   }
+  .card-img--photo.show-alt::before{content:"Tocca per tornare";}
   .btn:hover{background:var(--ink); color:var(--white);}
   .btn--ghost:hover{background:transparent; color:var(--ink);}
 }
