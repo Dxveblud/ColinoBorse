@@ -54,7 +54,7 @@ body{
 
 /* ---------- NAV ---------- */
 nav{
-  position:fixed; top:0; left:0; right:0; z-index:50;
+  position:sticky; top:0; z-index:50;
   display:flex; justify-content:space-between; align-items:center;
   padding:1.2rem 2rem;
   background:color-mix(in srgb, var(--paper) 88%, transparent);
@@ -88,10 +88,10 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--cognac); outline-o
 
 /* ---------- HERO ---------- */
 header{
-  min-height:88svh;
+  min-height:calc(88svh - 70px);
   display:grid; place-items:center;
   text-align:center;
-  padding:7rem 1.5rem 4rem;
+  padding:4rem 1.5rem 4rem;
   position:relative;
   overflow:hidden;
 }
@@ -197,7 +197,7 @@ header p{
 
 /* ---------- TESTATA PAGINE INTERNE ---------- */
 .page-head{
-  padding:9rem 1.5rem 1rem;
+  padding:4.5rem 1.5rem 1rem;
   text-align:center;
   position:relative;
 }
@@ -395,7 +395,7 @@ footer{
   nav ul{gap:1.4rem;}
   nav a{font-size:.72rem; padding:.3rem 0; display:inline-block;} /* tap target più alto */
 
-  header{padding:8.5rem 1.25rem 5rem; min-height:100svh;}
+  header{padding:3.5rem 1.25rem 4rem; min-height:calc(88svh - 110px);}
   header p{font-size:.98rem;}
   .hero-actions{display:flex; flex-direction:column; gap:.9rem; align-items:stretch; max-width:320px; margin-inline:auto;}
   .btn{text-align:center; padding:1rem 1.5rem;}
