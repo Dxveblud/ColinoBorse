@@ -29,19 +29,29 @@
   <h1>Ti è piaciuta una <em>borsa</em>?</h1>
 </div>
 
-<section class="contact page-section">
-  <p class="reveal">Scrivimi indicando il nome della borsa: ti rispondo con disponibilità, dettagli e modalità di consegna o spedizione.</p>
-  <div class="contact-links reveal">
-    <button class="btn" id="open-contact">Scrivimi un messaggio</button>
-  </div>
-</section>
+<section class="contact-page page-section">
+  <div class="contact-grid">
 
-<!-- Modal contatto -->
-<div class="modal-overlay" id="contact-modal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" id="close-contact" aria-label="Chiudi">&times;</button>
-    <h2 id="modal-title">Scrivimi</h2>
-    <form id="contact-form">
+    <div class="contact-info reveal">
+      <h2>Parliamone</h2>
+      <p>Scrivimi indicando il nome della borsa che ti interessa: ti rispondo con disponibilità, dettagli e modalità di consegna o spedizione.</p>
+      <ul class="contact-facts">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span><strong>Rispondo in giornata</strong><br>di solito entro poche ore</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9-5 9 5v8l-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 8l9 5 9-5M12 13v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span><strong>Consegna o spedizione</strong><br>concordiamo insieme il modo più comodo</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-5-4-9-7.5-9-11.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 3.5C21 13.5 17 17 12 21z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <span><strong>Personalizzazioni</strong><br>varianti di colore su richiesta</span>
+        </li>
+      </ul>
+    </div>
+
+    <form class="contact-form reveal" id="contact-form">
       <label>
         Il tuo nome
         <input type="text" name="nome" required autocomplete="name">
@@ -52,13 +62,14 @@
       </label>
       <label>
         Messaggio
-        <textarea name="messaggio" rows="5" required placeholder="Ciao! Mi interessa la borsa…"></textarea>
+        <textarea name="messaggio" rows="6" required placeholder="Ciao! Mi interessa la borsa…"></textarea>
       </label>
-      <button class="btn" type="submit" id="contact-submit">Invia</button>
+      <button class="btn" type="submit" id="contact-submit">Invia il messaggio</button>
       <p class="form-status" id="form-status" role="status"></p>
     </form>
+
   </div>
-</div>
+</section>
 
 <footer>
   <span>© 2026 Anna Maria Colino — Tutti i diritti riservati</span>

@@ -25,22 +25,11 @@ document.querySelectorAll('.card-img--photo').forEach(img => {
   img.addEventListener('click', () => img.classList.toggle('show-alt'));
 });
 
-// Modal contatto (solo pagina contatti)
-const contactModal = document.getElementById('contact-modal');
-if (contactModal) {
-  const openBtn = document.getElementById('open-contact');
-  const closeBtn = document.getElementById('close-contact');
-  const form = document.getElementById('contact-form');
+// Form contatto (solo pagina contatti)
+const form = document.getElementById('contact-form');
+if (form) {
   const status = document.getElementById('form-status');
   const submitBtn = document.getElementById('contact-submit');
-
-  const open = () => { contactModal.hidden = false; document.body.style.overflow = 'hidden'; };
-  const close = () => { contactModal.hidden = true; document.body.style.overflow = ''; };
-
-  openBtn.addEventListener('click', open);
-  closeBtn.addEventListener('click', close);
-  contactModal.addEventListener('click', e => { if (e.target === contactModal) close(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !contactModal.hidden) close(); });
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -65,7 +54,6 @@ if (contactModal) {
       status.textContent = 'Messaggio inviato! Ti risponderò al più presto ♥';
       status.className = 'form-status ok';
       form.reset();
-      setTimeout(close, 2500);
     } catch {
       status.textContent = 'Ops, qualcosa è andato storto. Riprova tra poco.';
       status.className = 'form-status err';
