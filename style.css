@@ -328,6 +328,54 @@ section{padding:6rem 2rem;}
   color:color-mix(in srgb, var(--ink) 60%, var(--paper));
 }
 
+/* ---------- CHI SONO (storia) ---------- */
+.story{max-width:1000px; margin:0 auto; text-align:center;}
+.story-lead{
+  font-family:var(--display);
+  font-size:clamp(1.25rem, 2.6vw, 1.7rem);
+  line-height:1.5;
+  max-width:34ch; margin:0 auto 4rem;
+}
+.story-points{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:2rem;
+  margin-bottom:4.5rem;
+}
+.story-point{
+  background:var(--white);
+  border:1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  border-top:3px solid var(--cognac);
+  padding:2.2rem 1.6rem;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.story-point:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 40px -18px color-mix(in srgb, var(--ink) 30%, transparent);
+}
+.story-point svg{
+  width:44px; height:44px;
+  color:var(--cognac);
+  margin-bottom:1rem;
+}
+.story-point h3{
+  font-family:var(--display); font-weight:400;
+  font-size:1.25rem; margin-bottom:.5rem;
+}
+.story-point p{
+  font-size:.92rem;
+  color:color-mix(in srgb, var(--ink) 75%, var(--paper));
+}
+.story-quote{
+  font-family:var(--display); font-style:italic;
+  font-size:clamp(1.3rem, 3vw, 1.9rem);
+  color:var(--cognac);
+  border-block:1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  padding:2.5rem 1rem;
+  max-width:34ch; margin:0 auto 3.5rem;
+}
+.story-cta{margin:0;}
+
 /* ---------- CHI SONO ---------- */
 .about{
   background:var(--ink); color:var(--paper);
