@@ -25,6 +25,56 @@ document.querySelectorAll('.card-img--photo').forEach(img => {
   img.addEventListener('click', () => img.classList.toggle('show-alt'));
 });
 
+// Modal contatto (solo pagina contatti)
+const contactModal = document.getElementById('contact-modal');
+if (contactModal) {
+  const openBtn = document.getElementById('open-contact');
+  const closeBtn = document.getElementById('close-contact');
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('contact-submit');
+
+  const open = () => { contactModal.hidden = false; document.body.style.overflow = 'hidden'; };
+  const close = () => { contactModal.hidden = true; document.body.style.overflow = ''; };
+
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  contactModal.addEventListener('click', e => { if (e.target === contactModal) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !contactModal.hidden) close(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    status.textContent = 'Invio in corso…';
+    status.className = 'form-status';
+    // indirizzo spezzato per non esporlo agli spam-bot che leggono il sorgente
+    const dest = ['dxve', '97', '@gm', 'ail.com'].join('');
+    try {
+      const data = Object.fromEntries(new FormData(form));
+      const res = await fetch(`https://formsubmit.co/ajax/${dest}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Nuovo messaggio dal sito — ${data.nome}`,
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+      if (!res.ok) throw new Error();
+      status.textContent = 'Messaggio inviato! Ti risponderò al più presto ♥';
+      status.className = 'form-status ok';
+      form.reset();
+      setTimeout(close, 2500);
+    } catch {
+      status.textContent = 'Ops, qualcosa è andato storto. Riprova tra poco.';
+      status.className = 'form-status err';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
 // Barra di avanzamento scroll
 const progress = document.querySelector('.scroll-progress');
 window.addEventListener('scroll', () => {

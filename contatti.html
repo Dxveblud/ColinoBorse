@@ -32,12 +32,33 @@
 <section class="contact page-section">
   <p class="reveal">Scrivimi indicando il nome della borsa: ti rispondo con disponibilità, dettagli e modalità di consegna o spedizione.</p>
   <div class="contact-links reveal">
-    <!-- Sostituisci i link con i tuoi contatti reali -->
-    <a class="btn" href="https://wa.me/390000000000">WhatsApp</a>
-    <a class="btn btn--ghost" href="mailto:tuamail@esempio.it">Email</a>
-    <a class="btn btn--ghost" href="https://instagram.com/tuoprofilo">Instagram</a>
+    <button class="btn" id="open-contact">Scrivimi un messaggio</button>
   </div>
 </section>
+
+<!-- Modal contatto -->
+<div class="modal-overlay" id="contact-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="close-contact" aria-label="Chiudi">&times;</button>
+    <h2 id="modal-title">Scrivimi</h2>
+    <form id="contact-form">
+      <label>
+        Il tuo nome
+        <input type="text" name="nome" required autocomplete="name">
+      </label>
+      <label>
+        La tua email
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label>
+        Messaggio
+        <textarea name="messaggio" rows="5" required placeholder="Ciao! Mi interessa la borsa…"></textarea>
+      </label>
+      <button class="btn" type="submit" id="contact-submit">Invia</button>
+      <p class="form-status" id="form-status" role="status"></p>
+    </form>
+  </div>
+</div>
 
 <footer>
   <span>© 2026 Anna Maria Colino — Tutti i diritti riservati</span>
