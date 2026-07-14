@@ -32,11 +32,16 @@ addEventListener('scroll', () => {
   });
 }, { passive: true });
 
-// Carosello foto nelle card prodotto: puntini + swipe, senza aprire il link per sbaglio
 const isTouch = matchMedia('(hover: none)').matches;
+
+// Card della collezione: carosello a puntini + swipe, senza aprire il link per sbaglio
 document.querySelectorAll('.card-img--photo').forEach(box => {
   const dots = box.querySelectorAll('.dot-btn');
-  if (dots.length < 2) return;
+  // Card "flip" della home: tocco per girare la foto
+  if (dots.length < 2) {
+    box.addEventListener('click', () => box.classList.toggle('show-alt'));
+    return;
+  }
   const show = alt => {
     box.classList.toggle('show-alt', alt);
     dots[0].classList.toggle('is-active', !alt);
@@ -58,6 +63,27 @@ document.querySelectorAll('.card-img--photo').forEach(box => {
   // se ho fatto swipe, non seguire il link della card
   const link = box.closest('a');
   if (link) link.addEventListener('click', e => { if (swiped) { e.preventDefault(); swiped = false; } });
+});
+
+// Home: la 2ª foto si rivela da sola quando la card è al centro dello schermo mentre si scorre
+if (isTouch) {
+  const flipIO = new IntersectionObserver(entries => {
+    entries.forEach(e => e.target.classList.toggle('show-alt', e.isIntersecting));
+  }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+  document.querySelectorAll('.card-img--flip').forEach(c => flipIO.observe(c));
+}
+
+// Pagina prodotto: scambio tra foto grande e miniatura
+document.querySelectorAll('.product-gallery').forEach(g => {
+  const main = g.querySelector('.pg-main');
+  const thumbImg = g.querySelector('.pg-thumb img');
+  const btn = g.querySelector('.pg-thumb');
+  if (!main || !thumbImg || !btn) return;
+  btn.addEventListener('click', () => {
+    const tmp = main.getAttribute('src');
+    main.setAttribute('src', thumbImg.getAttribute('src'));
+    thumbImg.setAttribute('src', tmp);
+  });
 });
 
 // Form contatto (solo pagina contatti)

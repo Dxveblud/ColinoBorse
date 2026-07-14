@@ -359,10 +359,24 @@ section{padding:6rem 2rem;}
 .product-inner{
   display:grid; grid-template-columns:1.05fr 1fr; gap:3rem; align-items:start;
 }
-.product-gallery{display:flex; flex-direction:column; gap:1rem;}
-.product-gallery img{
-  width:100%; display:block;
+.product-gallery{display:flex; flex-direction:column; align-items:flex-start; gap:1rem;}
+.pg-main{
+  max-width:100%; width:auto; height:auto; max-height:80vh; display:block;
   border:1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+.pg-switch{display:flex; align-items:center; gap:.85rem;}
+.pg-thumb{
+  padding:0; margin:0; cursor:pointer; background:none;
+  width:88px; height:88px; overflow:hidden; flex:none;
+  border:2px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  transition:border-color .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.pg-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+.pg-thumb:hover{border-color:var(--cognac);}
+.pg-hint{
+  font-size:.72rem; text-transform:uppercase; letter-spacing:.15em;
+  color:color-mix(in srgb, var(--ink) 55%, var(--paper));
 }
 .product-info{position:sticky; top:110px;}
 .product-info h1{font-size:clamp(2rem, 5vw, 3.2rem); max-width:none; margin:.6rem 0 .4rem;}
@@ -607,6 +621,15 @@ footer{
   /* !important: il tap su mobile attiva anche :hover, che altrimenti vince e tiene la foto nascosta */
   .card-img--photo .ph-alt{transition:opacity .5s ease;}
   .card-img--photo.show-alt .ph-alt{opacity:1!important;}
+  /* Etichetta "Tocca per girare" solo sulle card della home (flip) */
+  .card-img--flip::before{
+    content:"Tocca per girare";
+    position:absolute; bottom:.7rem; right:.7rem; z-index:3;
+    font-size:.6rem; text-transform:uppercase; letter-spacing:.15em;
+    background:color-mix(in srgb, var(--ink) 65%, transparent);
+    color:var(--white); padding:.3rem .6rem; border-radius:2px;
+  }
+  .card-img--flip.show-alt::before{content:"Tocca per tornare";}
   .btn:hover{background:var(--ink); color:var(--white);}
   .btn--ghost:hover{background:transparent; color:var(--ink);}
 }
