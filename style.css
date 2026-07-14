@@ -525,7 +525,12 @@ footer{
 /* Dispositivi touch: niente hover; la seconda foto si rivela scorrendo (vedi script.js) */
 @media (hover:none){
   .card{will-change:auto;}          /* niente layer GPU extra: più fluido su mobile */
+  .btn{will-change:auto;}
   .card-img::after{display:none;}   /* riflesso luce disattivato su touch */
+  /* Barra opaca senza sfocatura: niente ricalcolo del blur a ogni frame di scroll */
+  nav{backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--paper);}
+  /* Titolo con gradiente statico: niente ridisegno continuo del testo */
+  h1 em{animation:none; background-position:50% 0;}
   .card:hover{transform:none; box-shadow:none;}
   .card:hover .card-img--photo .ph-main{transform:none;}
   .card:hover .card-img--photo .ph-alt{opacity:0;}
