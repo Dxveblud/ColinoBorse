@@ -18,12 +18,19 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-// Tocca/clicca la foto per vedere il retro della borsa
-// (listener sempre attivo: su iOS il click parte solo con cursor:pointer nel CSS)
+// Retro della borsa (seconda foto)
 const isTouch = matchMedia('(hover: none)').matches;
-document.querySelectorAll('.card-img--photo').forEach(img => {
-  img.addEventListener('click', () => img.classList.toggle('show-alt'));
-});
+const photoCards = document.querySelectorAll('.card-img--photo');
+if (isTouch) {
+  // Su mobile la seconda foto si rivela da sola quando la card è al centro dello schermo mentre si scorre
+  const flipIO = new IntersectionObserver(entries => {
+    entries.forEach(e => e.target.classList.toggle('show-alt', e.isIntersecting));
+  }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+  photoCards.forEach(c => flipIO.observe(c));
+} else {
+  // Su desktop resta il click per fissare il retro (oltre all'hover)
+  photoCards.forEach(img => img.addEventListener('click', () => img.classList.toggle('show-alt')));
+}
 
 // Form contatto (solo pagina contatti)
 const form = document.getElementById('contact-form');

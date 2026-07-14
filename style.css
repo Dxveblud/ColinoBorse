@@ -511,6 +511,9 @@ footer{
   .section-head{flex-direction:column; gap:.3rem; margin-bottom:2.5rem;}
   .grid{gap:2rem;}
   .grid--single{max-width:100%;}
+  /* Foto prodotto a piena altezza: la borsa si vede intera, senza ritagli */
+  .card-img--photo{aspect-ratio:auto;}
+  .card-img--photo .ph-main{position:relative; height:auto; object-fit:contain;}
   .card-body{padding:1.2rem 1.1rem 1.3rem;}
   .about-inner{gap:2.5rem;}
   .about-visual{aspect-ratio:auto; padding:2.5rem 1.5rem;}
@@ -521,23 +524,15 @@ footer{
   }
 }
 
-/* Dispositivi touch: niente hover, si tocca la foto per vedere il retro */
+/* Dispositivi touch: niente hover; la seconda foto si rivela scorrendo (vedi script.js) */
 @media (hover:none){
   .card:hover{transform:none; box-shadow:none;}
   .card:hover .card-img--photo .ph-main{transform:none;}
   .card:hover .card-img--photo .ph-alt{opacity:0;}
   .card:hover .card-img::after{transition:none; transform:translateX(-120%);}
   /* !important: il tap su mobile attiva anche :hover, che altrimenti vince e tiene la foto nascosta */
+  .card-img--photo .ph-alt{transition:opacity .6s ease;}
   .card-img--photo.show-alt .ph-alt{opacity:1!important;}
-  .card-img--photo::before{
-    content:"Tocca per girare";
-    position:absolute; bottom:.7rem; right:.7rem; z-index:2;
-    font-size:.6rem; text-transform:uppercase; letter-spacing:.15em;
-    background:color-mix(in srgb, var(--ink) 65%, transparent);
-    color:var(--white); padding:.3rem .6rem;
-    border-radius:2px;
-  }
-  .card-img--photo.show-alt::before{content:"Tocca per tornare";}
   .btn:hover{background:var(--ink); color:var(--white);}
   .btn--ghost:hover{background:transparent; color:var(--ink);}
 }
