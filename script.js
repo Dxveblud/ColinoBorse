@@ -40,7 +40,11 @@ if (isTouch) {
   const flipIO = new IntersectionObserver(entries => {
     entries.forEach(e => e.target.classList.toggle('show-alt', e.isIntersecting));
   }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-  photoCards.forEach(c => flipIO.observe(c));
+  photoCards.forEach(c => {
+    flipIO.observe(c);
+    // ...e il tocco funziona comunque, per girarla a mano
+    c.addEventListener('click', () => c.classList.toggle('show-alt'));
+  });
 } else {
   // Su desktop resta il click per fissare il retro (oltre all'hover)
   photoCards.forEach(img => img.addEventListener('click', () => img.classList.toggle('show-alt')));

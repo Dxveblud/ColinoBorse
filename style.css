@@ -535,6 +535,15 @@ footer{
   /* !important: il tap su mobile attiva anche :hover, che altrimenti vince e tiene la foto nascosta */
   .card-img--photo .ph-alt{transition:opacity .6s ease;}
   .card-img--photo.show-alt .ph-alt{opacity:1!important;}
+  .card-img--photo::before{
+    content:"Tocca per girare";
+    position:absolute; bottom:.7rem; right:.7rem; z-index:2;
+    font-size:.6rem; text-transform:uppercase; letter-spacing:.15em;
+    background:color-mix(in srgb, var(--ink) 65%, transparent);
+    color:var(--white); padding:.3rem .6rem;
+    border-radius:2px;
+  }
+  .card-img--photo.show-alt::before{content:"Tocca per tornare";}
   .btn:hover{background:var(--ink); color:var(--white);}
   .btn--ghost:hover{background:transparent; color:var(--ink);}
 }
