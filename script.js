@@ -32,29 +32,46 @@ addEventListener('scroll', () => {
   });
 }, { passive: true });
 
-// Retro della borsa (seconda foto)
+// Carosello foto nelle card prodotto: puntini + swipe, senza aprire il link per sbaglio
 const isTouch = matchMedia('(hover: none)').matches;
-const photoCards = document.querySelectorAll('.card-img--photo');
-if (isTouch) {
-  // Su mobile la seconda foto si rivela da sola quando la card è al centro dello schermo mentre si scorre
-  const flipIO = new IntersectionObserver(entries => {
-    entries.forEach(e => e.target.classList.toggle('show-alt', e.isIntersecting));
-  }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-  photoCards.forEach(c => {
-    flipIO.observe(c);
-    // ...e il tocco funziona comunque, per girarla a mano
-    c.addEventListener('click', () => c.classList.toggle('show-alt'));
-  });
-} else {
-  // Su desktop resta il click per fissare il retro (oltre all'hover)
-  photoCards.forEach(img => img.addEventListener('click', () => img.classList.toggle('show-alt')));
-}
+document.querySelectorAll('.card-img--photo').forEach(box => {
+  const dots = box.querySelectorAll('.dot-btn');
+  if (dots.length < 2) return;
+  const show = alt => {
+    box.classList.toggle('show-alt', alt);
+    dots[0].classList.toggle('is-active', !alt);
+    dots[1].classList.toggle('is-active', alt);
+  };
+  dots.forEach((d, i) => d.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation(); show(i === 1);
+  }));
+  // swipe orizzontale per cambiare foto sul telefono
+  let x0 = null, y0 = null, swiped = false;
+  box.addEventListener('touchstart', e => {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; swiped = false;
+  }, { passive: true });
+  box.addEventListener('touchmove', e => {
+    if (x0 === null) return;
+    const dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { show(dx < 0); swiped = true; x0 = null; }
+  }, { passive: true });
+  // se ho fatto swipe, non seguire il link della card
+  const link = box.closest('a');
+  if (link) link.addEventListener('click', e => { if (swiped) { e.preventDefault(); swiped = false; } });
+});
 
 // Form contatto (solo pagina contatti)
 const form = document.getElementById('contact-form');
 if (form) {
   const status = document.getElementById('form-status');
   const submitBtn = document.getElementById('contact-submit');
+
+  // Precompila il messaggio se arrivo da una pagina prodotto (?b=Nome)
+  const borsa = new URLSearchParams(location.search).get('b');
+  if (borsa) {
+    const ta = form.querySelector('textarea[name="messaggio"]');
+    if (ta && !ta.value) ta.value = `Ciao! Mi interessa la borsa "${borsa}". `;
+  }
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
