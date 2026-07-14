@@ -526,6 +526,8 @@ footer{
 
 /* Dispositivi touch: niente hover; la seconda foto si rivela scorrendo (vedi script.js) */
 @media (hover:none){
+  .card{will-change:auto;}          /* niente layer GPU extra: più fluido su mobile */
+  .card-img::after{display:none;}   /* riflesso luce disattivato su touch */
   .card:hover{transform:none; box-shadow:none;}
   .card:hover .card-img--photo .ph-main{transform:none;}
   .card:hover .card-img--photo .ph-alt{opacity:0;}

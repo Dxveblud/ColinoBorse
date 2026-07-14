@@ -12,10 +12,24 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   io.observe(el);
 });
 
-// Ombra alla nav dopo lo scroll
+// Scroll: ombra nav + barra avanzamento, in un unico handler con rAF (leggero su mobile)
 const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+const progress = document.querySelector('.scroll-progress');
+let maxScroll = 0;
+const recalcMax = () => { maxScroll = document.documentElement.scrollHeight - innerHeight; };
+recalcMax();
+addEventListener('resize', recalcMax, { passive: true });
+addEventListener('load', recalcMax);
+let scrollTicking = false;
+addEventListener('scroll', () => {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    if (progress) progress.style.transform = `scaleX(${maxScroll > 0 ? y / maxScroll : 0})`;
+    scrollTicking = false;
+  });
 }, { passive: true });
 
 // Retro della borsa (seconda foto)
@@ -70,20 +84,14 @@ if (form) {
   });
 }
 
-// Barra di avanzamento scroll
-const progress = document.querySelector('.scroll-progress');
-window.addEventListener('scroll', () => {
-  const max = document.documentElement.scrollHeight - innerHeight;
-  progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-}, { passive: true });
-
 // Tilt 3D sulla card al movimento del mouse (solo desktop)
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Particelle fluttuanti nella hero (puntini che salgono lentamente)
+// Particelle fluttuanti nella hero (meno su mobile per non appesantire)
 if (!reduceMotion) {
   const hero = document.querySelector('header');
-  for (let i = 0; i < 16; i++) {
+  const dots = isTouch ? 7 : 16;
+  for (let i = 0; i < dots; i++) {
     const d = document.createElement('span');
     d.className = 'dot';
     const size = 3 + Math.random() * 5;
