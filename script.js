@@ -34,44 +34,46 @@ addEventListener('scroll', () => {
 
 const isTouch = matchMedia('(hover: none)').matches;
 
-// Card della collezione: carosello a puntini + swipe, senza aprire il link per sbaglio
-document.querySelectorAll('.card-img--photo').forEach(box => {
-  const dots = box.querySelectorAll('.dot-btn');
-  // Card "flip" della home: tocco per girare la foto
-  if (dots.length < 2) {
-    box.addEventListener('click', () => box.classList.toggle('show-alt'));
-    return;
-  }
-  const show = alt => {
-    box.classList.toggle('show-alt', alt);
-    dots[0].classList.toggle('is-active', !alt);
-    dots[1].classList.toggle('is-active', alt);
-  };
-  dots.forEach((d, i) => d.addEventListener('click', e => {
-    e.preventDefault(); e.stopPropagation(); show(i === 1);
-  }));
-  // swipe orizzontale per cambiare foto sul telefono
-  let x0 = null, y0 = null, swiped = false;
-  box.addEventListener('touchstart', e => {
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; swiped = false;
-  }, { passive: true });
-  box.addEventListener('touchmove', e => {
-    if (x0 === null) return;
-    const dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { show(dx < 0); swiped = true; x0 = null; }
-  }, { passive: true });
-  // se ho fatto swipe, non seguire il link della card
-  const link = box.closest('a');
-  if (link) link.addEventListener('click', e => { if (swiped) { e.preventDefault(); swiped = false; } });
+// HOME — card "flip": tocco per girare la foto
+document.querySelectorAll('.card-img--flip').forEach(box => {
+  box.addEventListener('click', () => box.classList.toggle('show-alt'));
 });
-
-// Home: la 2ª foto si rivela da sola quando la card è al centro dello schermo mentre si scorre
+// HOME — la 2ª foto si rivela da sola quando la card è al centro dello schermo scorrendo
 if (isTouch) {
   const flipIO = new IntersectionObserver(entries => {
     entries.forEach(e => e.target.classList.toggle('show-alt', e.isIntersecting));
   }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
   document.querySelectorAll('.card-img--flip').forEach(c => flipIO.observe(c));
 }
+
+// COLLEZIONE — carosello nativo scroll-snap: fluido, con puntini sincronizzati
+document.querySelectorAll('.card-img--carousel').forEach(box => {
+  const car = box.querySelector('.carousel');
+  const dots = [...box.querySelectorAll('.dot-btn')];
+  if (!car || dots.length < 2) return;
+  // aggiorna i puntini in base alla posizione dello scroll
+  let raf = false;
+  car.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = true;
+    requestAnimationFrame(() => {
+      const i = Math.round(car.scrollLeft / car.clientWidth);
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+      raf = false;
+    });
+  }, { passive: true });
+  // click su un puntino: scorre alla foto
+  dots.forEach((d, i) => d.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    car.scrollTo({ left: i * car.clientWidth, behavior: 'smooth' });
+  }));
+  // se ho trascinato il carosello, non aprire il link della card
+  let sx = 0, moved = false;
+  car.addEventListener('touchstart', e => { sx = e.touches[0].clientX; moved = false; }, { passive: true });
+  car.addEventListener('touchmove', e => { if (Math.abs(e.touches[0].clientX - sx) > 8) moved = true; }, { passive: true });
+  const link = box.closest('a');
+  if (link) link.addEventListener('click', e => { if (moved) { e.preventDefault(); moved = false; } });
+});
 
 // Pagina prodotto: scambio tra foto grande e miniatura
 document.querySelectorAll('.product-gallery').forEach(g => {
