@@ -569,8 +569,9 @@ footer{
 
   section{padding:3.5rem 1.25rem;}
   .section-head{flex-direction:column; gap:.3rem; margin-bottom:2.5rem;}
-  /* 2 borse per riga */
-  .grid{grid-template-columns:1fr 1fr; gap:1.6rem .9rem;}
+  .grid{gap:2rem;}
+  /* 2 borse per riga: solo nella collezione */
+  .grid--two{grid-template-columns:1fr 1fr; gap:1.6rem .9rem;}
   .grid--single{max-width:100%;}
   .card-body{padding:1.2rem 1.1rem 1.3rem;}
   .card-body--min{padding:.8rem .3rem .2rem; flex-direction:column; gap:.25rem; text-align:center;}
