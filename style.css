@@ -379,7 +379,8 @@ section{padding:6rem 2rem;}
 }
 .product-gallery{display:flex; flex-direction:column; align-items:flex-start; gap:1rem;}
 .pg-main{
-  max-width:100%; width:auto; height:auto; max-height:80vh; display:block;
+  width:100%; display:block;
+  aspect-ratio:4/5; object-fit:cover; object-position:center;
   border:1px solid color-mix(in srgb, var(--ink) 10%, transparent);
 }
 .pg-switch{display:flex; align-items:center; gap:.85rem;}
